@@ -5,9 +5,7 @@ const rows = canvas.height / scale // get rows within canvas
 const columns = canvas.width / scale // get columns within canvas
 var snake;
 this.gameOver = false;
-
-
-
+score = 0; // current score
 
 /**
  * calls itself
@@ -22,7 +20,7 @@ this.gameOver = false;
     // repeatedly clear, update, and draw new snake
     window.setInterval(() => {
         if (snake.isDead()) {
-            if(confirm('GG. Press OK to restart.')) {
+            if(confirm('You Lost! Press OK to restart.')) {
                 window.location = '/';
             }
             return;
@@ -33,10 +31,12 @@ this.gameOver = false;
         snake.draw();
 
         if (snake.eat(food)) {
+            score++;
+            document.getElementById("score").innerHTML = "Score: " + score;
             food.pickLocation();
         }
         // the snake is drawn after the fruit so that the fruit is covered by the snake if they are in the same spot
-    }, 50); // 20 times a second (every 50 ms)
+    }, 60); // 20 times a second (every 50 ms)
 }());
 
 window.addEventListener('keydown', ((evt) => {
